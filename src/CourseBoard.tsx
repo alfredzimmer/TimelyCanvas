@@ -18,7 +18,6 @@ export function CourseEvent({ courses }: CoursesProps) {
   const [eventName, setEventName] = useState<string>();
 
   const handleSelect = (key: number) => {
-    console.log(key);
     setEventName(courses[key].name);
     const color = courses[key].color;
     setBgColor(hexToRgba(color, 0.25));
@@ -40,7 +39,7 @@ export function CourseEvent({ courses }: CoursesProps) {
             className="min-h-[50px] w-[150px] p-2 justify-center align-middle border-zinc-500"
             radius="sm"
           >
-            <p>{eventName ? eventName : ""}</p>
+            <p className="font-bold">{eventName ? eventName : ""}</p>
           </Card>
         </DropdownTrigger>
         <DropdownMenu onAction={(key) => handleSelect(Number(key))}>

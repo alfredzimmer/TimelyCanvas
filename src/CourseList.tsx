@@ -15,6 +15,7 @@ import {
   RadioGroup,
   Radio,
   useDisclosure,
+
 } from "@nextui-org/react";
 import { Material } from "@uiw/react-color";
 import { generateRandomColor } from "./utils.ts";
@@ -30,6 +31,7 @@ export default function CourseList({
   addCourse: (newCourse: Course) => void;
   deleteCourse: (id: number) => void;
 }) {
+
   // TODO: useRef instead of useState to improve performance.
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [changed, setChanged] = useState(false);
@@ -48,9 +50,9 @@ export default function CourseList({
   };
 
   return (
-    <Card className="max-w-[350px]">
-      <h2 className="m-2 ml-4 text-2xl">选课</h2>
-      <div className="mb-6 flex flex-col items-center mx-2">
+    <Card className="max-w-[450px]">
+      <h2 className="mt-4 ml-12 text-3xl">课程</h2>
+      <div className="mb-3 flex flex-col items-center mx-2">
         {courses.map((course) => (
           <CourseCard key={course.id} {...course} deleteCourse={deleteCourse} />
         ))}
@@ -88,7 +90,7 @@ export default function CourseList({
                       <Radio value="SL">SL</Radio>
                     </RadioGroup>
                   </div>
-                  <div className="flex flex-row gap-7 items-center">
+                  <div className="flex flex-row gap-7 it·······ems-center">
                     <Input
                       label="其它信息"
                       value={courseInformation}
