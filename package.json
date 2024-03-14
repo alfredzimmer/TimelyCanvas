@@ -13,6 +13,7 @@
     "@nextui-org/react": "^2.2.9",
     "@uiw/react-color": "^2.1.0",
     "framer-motion": "^11.0.8",
+    "hex-to-rgba": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10"

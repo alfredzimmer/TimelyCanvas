@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import hexToRgba from "hex-to-rgba";
 
 interface CoursesProps {
   courses: Course[];
@@ -15,30 +16,12 @@ export function CourseEvent({ courses }: CoursesProps) {
   const [color, setColor] = useState<string>("#B4B4B8");
   const [bgColor, setBgColor] = useState<string>("#C7C8CC");
   const [eventName, setEventName] = useState<string>();
-  function hexToRgbA(hex: string, percent: string) {
-    /* Magic stuff from Stack Overflow */
-    let c: any;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-      c = hex.substring(1).split("");
-      if (c.length == 3) {
-        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-      }
-      c = "0x" + c.join("");
-      return (
-        "rgba(" +
-        [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
-        "," +
-        percent +
-        ")"
-      );
-    }
-    throw new Error("Bad Hex");
-  }
+
   const handleSelect = (key: number) => {
     console.log(key);
     setEventName(courses[key].name);
     const color = courses[key].color;
-    setBgColor(hexToRgbA(color, "25%"));
+    setBgColor(hexToRgba(color, 0.25));
     setColor(color);
   };
   return (
@@ -60,12 +43,12 @@ export function CourseEvent({ courses }: CoursesProps) {
             <p>{eventName ? eventName : ""}</p>
           </Card>
         </DropdownTrigger>
-        <DropdownMenu onAction={(key) => handleSelect(key)}>
+        <DropdownMenu onAction={(key) => handleSelect(Number(key))}>
           {courses.map((course) => (
             <DropdownItem key={course.id}>
               <div className="flex flex-row">
                 <div
-                  className="mr-2 h-5 w-5 rounded-xl"
+                  className="mr-2 h-5 w-5 rounded-full"
                   style={{ backgroundColor: course.color }}
                 ></div>
                 <p>{course.name}</p>

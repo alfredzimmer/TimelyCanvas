@@ -18,7 +18,7 @@ export function CourseCard({ name, info, color, id, deleteCourse }: CourseCardPr
   return (
     <Card className="min-w-[300px] mt-2" radius="sm">
       <CardHeader>
-        <div className="mx-2 h-5 w-5" style={{ backgroundColor: color }}></div>
+        <div className="mx-2 h-5 w-5 rounded-full" style={{ backgroundColor: color }}></div>
         <p className="mx-1 text-xl">{name}</p>
         {info && (
           <p className="text-default-500 w-[100px] text-left pl-1">{info}</p>
