@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   Input,
-  Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
@@ -15,6 +14,7 @@ import {
   RadioGroup,
   Radio,
   useDisclosure,
+  Modal,
 
 } from "@nextui-org/react";
 import { Material } from "@uiw/react-color";
@@ -137,7 +137,7 @@ export default function CourseList({
                       }
 
                       const newCourse: Course = {
-                        id: courses.length,
+                        id: Math.floor(Math.random() * 1e8),
                         name: courseName,
                         level: courseLevel,
                         info: courseInformation,

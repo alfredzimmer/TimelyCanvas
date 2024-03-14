@@ -18,8 +18,9 @@ export function CourseEvent({ courses }: CoursesProps) {
   const [eventName, setEventName] = useState<string>();
 
   const handleSelect = (key: number) => {
-    setEventName(courses[key].name);
-    const color = courses[key].color;
+    const selectedCourse = courses.find((course) => course.id === key);
+    setEventName(selectedCourse!.name);
+    const color = selectedCourse!.color;
     setBgColor(hexToRgba(color, 0.25));
     setColor(color);
   };
