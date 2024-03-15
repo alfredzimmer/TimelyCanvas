@@ -5,7 +5,7 @@ const githubLink = "https://github.com/alfredzimmer/TimelyCanvas/"
 export function Header() {
   return (
     <header className="px-12 py-4 flex flex-row justify-between">
-      <div className="text-4xl font-Logo">Timely Canvas</div>
+      <a href="/" className="text-4xl font-Logo select-none">Timely Canvas</a>
       <Link href={githubLink} color="foreground"><GitHub /></Link>
     </header>
   );
