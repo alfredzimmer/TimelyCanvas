@@ -8,42 +8,36 @@ function App() {
   const [courses, setCourses] = useState<Course[]>([]);
 
   const addCourse = (newCourse: Course) => {
-    setCourses([...courses, newCourse]);
+    const coursesUpdated = [...courses, newCourse];
+    localStorage.setItem("userCourses", JSON.stringify(coursesUpdated));
+    setCourses(coursesUpdated);
   };
 
   const deleteCourse = (id: number) => {
     const coursesUpdated = courses.filter((course) => course.id !== id);
+    localStorage.setItem("userCourses", JSON.stringify(coursesUpdated));
     setCourses(coursesUpdated);
   };
 
   useEffect(() => {
     const userCourses = localStorage.getItem("userCourses");
     if (userCourses) {
-      const parsedCourses = JSON.parse(userCourses);
-      if (JSON.stringify(parsedCourses) !== JSON.stringify(courses)) {
-        setCourses(parsedCourses);
-      }
+      setCourses(JSON.parse(userCourses));
     }
   }, []);
-
-  useEffect(() => {
-    if (courses !== null) {
-      localStorage.setItem("userCourses", JSON.stringify(courses));
-    }
-  }, [courses]);
 
   return (
     <>
       <Header />
       <main className="justify-center flex-row flex mx-5 min-w-[800px] align-middle mt-[80px]">
         <CourseBoard courses={courses} />
-          <div className="min-w-[400px]">
-            <CourseList
-              courses={courses}
-              addCourse={addCourse}
-              deleteCourse={deleteCourse}
-            />
-          </div>
+        <div className="min-w-[400px]">
+          <CourseList
+            courses={courses}
+            addCourse={addCourse}
+            deleteCourse={deleteCourse}
+          />
+        </div>
       </main>
     </>
   );

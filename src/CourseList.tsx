@@ -49,10 +49,14 @@ export default function CourseList({
 
   return (
     <Card className="max-w-[450px]">
-      <h2 className="mt-4 ml-12 text-3xl">课程</h2>
-      <div className="mb-3 flex flex-col items-center mx-2">
+      <h2 className="mt-4 ml-8 text-3xl">课程</h2>
+      <div className="mb-3 mt-2 flex flex-col items-center mx-0">
         {courses.map((course) => (
-          <CourseCard key={course.id} {...course} deleteCourse={deleteCourse} />
+            <CourseCard
+              key={course.id}
+              {...course}
+              deleteCourse={deleteCourse}
+            />
         ))}
         <Button className="mt-2" onPress={onOpen} color="primary">
           <Plus />

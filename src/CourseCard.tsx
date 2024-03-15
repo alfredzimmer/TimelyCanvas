@@ -17,7 +17,7 @@ export function CourseCard({
   deleteCourse,
 }: CourseCardProps) {
   return (
-    <Card className="w-[320px] mt-2" radius="sm">
+    <Card className="w-[350px] mt-2" radius="sm">
       <CardHeader className="pb-0">
         <div
           className="mx-1 h-4 w-4 rounded-full"

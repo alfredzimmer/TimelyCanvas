@@ -62,7 +62,7 @@ export function CourseEvent({ courses }: CoursesProps) {
 }
 export default function CourseBoard({ courses }: CoursesProps) {
   return (
-    <div className="flex flex-col mr-10">
+    <div className="flex flex-col mr-20">
       {[...Array(10)].map((_, i) => (
         <div className="justify-around flex flex-row mt-2" key={i}>
           {[...Array(5)].map((_, j) => (
