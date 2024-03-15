@@ -8,7 +8,7 @@ function App() {
   const [courses, setCourses] = useState<Course[]>([]);
 
   const addCourse = (newCourse: Course) => {
-    setCourses([...courses!, newCourse]);
+    setCourses([...courses, newCourse]);
   };
 
   const deleteCourse = (id: number) => {

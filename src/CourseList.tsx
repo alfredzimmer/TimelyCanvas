@@ -15,10 +15,9 @@ import {
   Radio,
   useDisclosure,
   Modal,
-
 } from "@nextui-org/react";
 import { Material } from "@uiw/react-color";
-import { generateRandomColor } from "./utils.ts";
+import { generateId, generateRandomColor } from "./utils.ts";
 import { Plus } from "react-feather";
 import { CourseCard } from "./CourseCard.tsx";
 
@@ -31,7 +30,6 @@ export default function CourseList({
   addCourse: (newCourse: Course) => void;
   deleteCourse: (id: number) => void;
 }) {
-
   // TODO: useRef instead of useState to improve performance.
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [changed, setChanged] = useState(false);
@@ -137,7 +135,7 @@ export default function CourseList({
                       }
 
                       const newCourse: Course = {
-                        id: Math.floor(Math.random() * 1e8),
+                        id: generateId(),
                         name: courseName,
                         level: courseLevel,
                         info: courseInformation,
