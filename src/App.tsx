@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Course } from "./data";
 import CourseList from "./CourseList";
 import CourseBoard from "./CourseBoard";
@@ -37,7 +37,6 @@ function App() {
       <Header />
       <main className="justify-center flex-row flex mx-5 min-w-[800px] align-middle mt-[80px]">
         <CourseBoard courses={courses} />
-        <Suspense>
           <div className="min-w-[400px]">
             <CourseList
               courses={courses}
@@ -45,7 +44,6 @@ function App() {
               deleteCourse={deleteCourse}
             />
           </div>
-        </Suspense>
       </main>
     </>
   );

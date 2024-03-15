@@ -14,7 +14,7 @@ interface CoursesProps {
 }
 export function CourseEvent({ courses }: CoursesProps) {
   const [color, setColor] = useState<string>("#B4B4B8");
-  const [bgColor, setBgColor] = useState<string>("#C7C8CC");
+  const [bgColor, setBgColor] = useState<string>("#D7D8DC");
   const [eventName, setEventName] = useState<string>();
 
   const handleSelect = (key: number) => {
