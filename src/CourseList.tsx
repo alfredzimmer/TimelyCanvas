@@ -2,7 +2,6 @@ import { SetStateAction, useState } from "react";
 import { Course } from "./data.ts";
 import {
   Button,
-  Card,
   Input,
   ModalBody,
   ModalContent,
@@ -48,7 +47,7 @@ export default function CourseList({
   };
 
   return (
-    <Card className="max-w-[450px]">
+    <div className="max-w-[450px] border-2 border-[#D7D8DC] rounded-lg">
       <h2 className="mt-4 ml-8 text-3xl">课程</h2>
       <div className="mb-3 mt-2 flex flex-col items-center mx-0">
         {courses.map((course) => (
@@ -163,6 +162,6 @@ export default function CourseList({
           </ModalContent>
         </Modal>
       </div>
-    </Card>
+    </div>
   );
 }
