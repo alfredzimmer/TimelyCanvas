@@ -1,9 +1,9 @@
 import {
   Button,
   Input,
+  Modal,
   ModalBody,
   ModalContent,
-  Modal,
   ModalFooter,
   ModalHeader,
   Popover,
@@ -33,6 +33,7 @@ export default function CourseDetails({
     name: "",
     color: generateRandomColor(),
   });
+
   function handleSubmit() {
     addCourse(course);
     setCourse({ id: generateId(), name: "", color: generateRandomColor() });
