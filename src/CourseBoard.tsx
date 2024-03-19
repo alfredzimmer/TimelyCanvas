@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { Course } from "./data";
-import {
-  Card,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/react";
+import { Card, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import hexToRgba from "hex-to-rgba";
 
 interface CoursesProps {
   courses: Course[];
 }
+
 export function CourseEvent({ courses }: CoursesProps) {
   const [color, setColor] = useState<string>("#B4B4B8");
   const [bgColor, setBgColor] = useState<string>("#D7D8DC");
@@ -34,7 +29,7 @@ export function CourseEvent({ courses }: CoursesProps) {
               backgroundColor: bgColor,
               color: color,
               borderLeftWidth: "3px",
-              borderColor: color,
+              borderColor: color
             }}
             shadow="none"
             className="min-h-[50px] w-[150px] p-2 justify-center align-middle border-zinc-500"
@@ -60,6 +55,7 @@ export function CourseEvent({ courses }: CoursesProps) {
     </div>
   );
 }
+
 export default function CourseBoard({ courses }: CoursesProps) {
   return (
     <div className="flex flex-col mr-20">
