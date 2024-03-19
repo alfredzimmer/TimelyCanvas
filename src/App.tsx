@@ -13,6 +13,21 @@ function App() {
     setCourses(coursesUpdated);
   };
 
+  const editCourse = (course: Course, id: number) => {
+    const index = courses.findIndex((c: Course) => c.id === id);
+    if (index !== -1) {
+      const coursesUpdated = [
+        ...courses.slice(0, index),
+        course,
+        ...courses.slice(index + 1),
+      ];
+      localStorage.setItem("userCourses", JSON.stringify(coursesUpdated));
+      setCourses(coursesUpdated);
+    } else {
+      console.error(`Course with id ${id} not found`);
+    }
+  };
+
   const deleteCourse = (id: number) => {
     const coursesUpdated = courses.filter((course) => course.id !== id);
     localStorage.setItem("userCourses", JSON.stringify(coursesUpdated));
@@ -36,6 +51,7 @@ function App() {
             courses={courses}
             addCourse={addCourse}
             deleteCourse={deleteCourse}
+            editCourse={editCourse}
           />
         </div>
       </main>

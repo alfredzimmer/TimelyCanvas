@@ -23,7 +23,7 @@ type CourseDetailsProps = {
   addCourse: (newCourse: Course) => void;
 };
 
-export default function CourseDetails({
+export default function NewCourseModal({
   isOpen,
   onOpenChange,
   addCourse,

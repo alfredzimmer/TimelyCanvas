@@ -1,45 +1,161 @@
-import { Button, CardBody, CardHeader } from "@nextui-org/react";
-import { Trash2 } from "react-feather";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Radio,
+  RadioGroup,
+  useDisclosure,
+} from "@nextui-org/react";
+import { Edit, Trash2 } from "react-feather";
+import { Material } from "@uiw/react-color";
+import { Course } from "./data.ts";
 
 type CourseCardProps = {
-  id: number;
-  name: string;
-  info?: string;
-  color: string;
+  course: Course;
+  editCourse: (course: Course, id: number) => void;
   deleteCourse: (id: number) => void;
 };
 
 export function CourseCard({
-  name,
-  info,
-  color,
-  id,
+  course,
+  editCourse,
   deleteCourse,
 }: CourseCardProps) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
-    <div className="w-[350px] mt-2 border-1 border-[#D7D8DC] rounded-lg">
+    <Card
+      className="w-[350px] mt-2 border-1 border-[#D7D8DC] rounded-lg"
+      shadow={"none"}
+    >
       <CardHeader className="pb-0">
         <div
           className="mx-1 h-4 w-4 rounded-full"
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: course.color }}
         ></div>
-        <p className="mx-1 text-2xl font-bold">{name}</p>
+        <p className="mx-1 text-2xl font-bold">{course.name}</p>
+        <Button
+          className="ml-auto border-1 border-[#D7D8DC] rounded-lg"
+          color={"primary"}
+          isIconOnly
+          onClick={onOpen}
+        >
+          <Edit />
+        </Button>
       </CardHeader>
       <CardBody>
-        <div className="flex flex-row">
-          {info && (
-            <p className="ml-2 text-default-500 text-md text-left">{info}</p>
+        <div className="flex flex-row h-6">
+          {course.info && (
+            <p className="ml-2 text-default-500 text-md text-left">
+              {course.info}
+            </p>
           )}
-          <Button
-            className="ml-auto"
-            color="danger"
-            isIconOnly
-            onClick={() => deleteCourse(id)}
-          >
-            <Trash2 />
-          </Button>
         </div>
       </CardBody>
-    </div>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                修改课程
+              </ModalHeader>
+              <ModalBody>
+                <div className="flex flex-row gap-3">
+                  <Input
+                    className="min-w-[275px]"
+                    label="课程名称"
+                    variant="flat"
+                    value={course.name}
+                    isInvalid={
+                      course.name.length === 0 || course.name.length === 8
+                    }
+                    maxLength={8}
+                    onChange={(e) =>
+                      editCourse({ ...course, name: e.target.value }, course.id)
+                    }
+                    isRequired
+                  />
+                  <RadioGroup
+                    value={course.level}
+                    onValueChange={(value) => {
+                      editCourse({ ...course, level: value }, course.id);
+                    }}
+                  >
+                    <Radio value="HL">HL</Radio>
+                    <Radio value="SL">SL</Radio>
+                  </RadioGroup>
+                </div>
+                <div className="flex flex-row gap-7">
+                  <Input
+                    label="其它信息"
+                    value={course.info}
+                    onChange={(e) => {
+                      editCourse(
+                        { ...course, info: e.target.value },
+                        course.id,
+                      );
+                    }}
+                    maxLength={40}
+                    className="max-w-[300px]"
+                  />
+                  <Popover placement="bottom">
+                    <PopoverTrigger>
+                      <Button
+                        className="h-[50px] w-[50px]"
+                        style={{ backgroundColor: course.color }}
+                      />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <Material
+                        style={{
+                          width: 150,
+                        }}
+                        color={course.color}
+                        onChange={(color) => {
+                          editCourse(
+                            { ...course, color: color.hex },
+                            course.id,
+                          );
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="danger"
+                  variant="flat"
+                  onClick={() => {
+                    onClose();
+                    deleteCourse(course.id);
+                  }}
+                  isIconOnly
+                >
+                  <Trash2 />
+                </Button>
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  保存
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </Card>
   );
 }

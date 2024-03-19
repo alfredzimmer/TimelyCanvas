@@ -2,18 +2,20 @@ import { Course } from "./data.ts";
 import { Button, Card, CardHeader, useDisclosure } from "@nextui-org/react";
 import { Plus } from "react-feather";
 import { CourseCard } from "./CourseCard.tsx";
-import CourseDetails from "./CourseDetails.tsx";
+import NewCourseModal from "./NewCourseModal.tsx";
 
 type CourseListProps = {
   courses: Course[];
   addCourse: (newCourse: Course) => void;
   deleteCourse: (id: number) => void;
+  editCourse: (course: Course, id: number) => void;
 };
 
 export default function CourseList({
   courses,
   addCourse,
   deleteCourse,
+  editCourse,
 }: CourseListProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -24,16 +26,21 @@ export default function CourseList({
       </CardHeader>
       <div className="mb-3 flex flex-col items-center mx-0">
         {courses.map((course) => (
-          <CourseCard key={course.id} {...course} deleteCourse={deleteCourse} />
+          <CourseCard
+            key={course.id}
+            course={course}
+            deleteCourse={deleteCourse}
+            editCourse={editCourse}
+          />
         ))}
         <Button className="mt-2" onPress={onOpen} color="primary">
           <Plus />
         </Button>
-        <CourseDetails
+        <NewCourseModal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           addCourse={addCourse}
-        ></CourseDetails>
+        ></NewCourseModal>
       </div>
     </Card>
   );
