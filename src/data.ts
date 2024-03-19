@@ -12,7 +12,7 @@ export const testData: Course[] = [
     name: "文学",
     level: "SL",
     info: "214",
-    color: "#001F5B",
+    color: "#2862c2",
   },
   {
     id: 1,

@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, CardBody, CardHeader } from "@nextui-org/react";
 import { Trash2 } from "react-feather";
 
 type CourseCardProps = {
@@ -17,7 +17,7 @@ export function CourseCard({
   deleteCourse,
 }: CourseCardProps) {
   return (
-    <Card className="w-[350px] mt-2" radius="sm">
+    <div className="w-[350px] mt-2 border-1 border-[#D7D8DC] rounded-lg">
       <CardHeader className="pb-0">
         <div
           className="mx-1 h-4 w-4 rounded-full"
@@ -40,6 +40,6 @@ export function CourseCard({
           </Button>
         </div>
       </CardBody>
-    </Card>
+    </div>
   );
 }
