@@ -13,19 +13,12 @@ type CoursesProps = {
   courses: Course[];
 };
 
-export function CourseEvent({ courses }: CoursesProps) {
-  const { color: color, name } = freePeriod;
-  const [prColor, setPrColor] = useState<string>(color);
-  const [bgColor, setBgColor] = useState<string>(hexToRgba(color, 0.25));
-  const [eventName, setEventName] = useState<string>(name);
+function CourseEvent({ courses }: CoursesProps) {
+  const [selectedCourse, setSelectedCourse] = useState(freePeriod);
+  function handleSelect(key: number) {
+    setSelectedCourse(courses.find((course) => course.id === key)!);
+  }
 
-  const handleSelect = (key: number) => {
-    const selectedCourse = courses.find((course) => course.id === key);
-    setEventName(selectedCourse!.name);
-    const color = selectedCourse!.color;
-    setBgColor(hexToRgba(color, 0.25));
-    setPrColor(color);
-  };
   return (
     <div className="mx-1">
       <Dropdown>
@@ -33,16 +26,18 @@ export function CourseEvent({ courses }: CoursesProps) {
           <Card
             as="button"
             style={{
-              backgroundColor: bgColor,
-              color: prColor,
+              backgroundColor: hexToRgba(selectedCourse.color, 0.25),
+              color: selectedCourse.color,
               borderLeftWidth: "3px",
-              borderColor: prColor,
+              borderColor: selectedCourse.color,
             }}
             shadow="none"
             className="min-h-[50px] w-[150px] p-2 justify-center align-middle border-zinc-500"
             radius="sm"
           >
-            <p className="font-bold">{eventName === "空课" ? "" : eventName}</p>
+            <p className="font-bold">
+              {selectedCourse.name === "空课" ? "" : selectedCourse.name}
+            </p>
           </Card>
         </DropdownTrigger>
         <DropdownMenu onAction={(key) => handleSelect(Number(key))}>

@@ -19,6 +19,7 @@ import {
 import { Edit, Trash2 } from "react-feather";
 import { Material } from "@uiw/react-color";
 import { Course } from "./data.ts";
+import { useState } from "react";
 
 type CourseCardProps = {
   course: Course;
@@ -32,6 +33,12 @@ export function CourseCard({
   deleteCourse,
 }: CourseCardProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [editedCourse, setEditedCourse] = useState<Course>(course);
+
+  function handleSubmit() {
+    editCourse(editedCourse, course.id);
+  }
+
   return (
     <Card
       className="w-[350px] mt-2 border-1 border-[#D7D8DC] rounded-lg"
@@ -74,20 +81,21 @@ export function CourseCard({
                     className="min-w-[275px]"
                     label="课程名称"
                     variant="flat"
-                    value={course.name}
+                    value={editedCourse.name}
                     isInvalid={
-                      course.name.length === 0 || course.name.length === 8
+                      editedCourse.name.length === 0 ||
+                      editedCourse.name.length === 8
                     }
                     maxLength={8}
-                    onChange={(e) =>
-                      editCourse({ ...course, name: e.target.value }, course.id)
-                    }
+                    onValueChange={(value) => {
+                      setEditedCourse({ ...editedCourse, name: value });
+                    }}
                     isRequired
                   />
                   <RadioGroup
-                    value={course.level}
+                    value={editedCourse.level}
                     onValueChange={(value) => {
-                      editCourse({ ...course, level: value }, course.id);
+                      setEditedCourse({ ...editedCourse, level: value });
                     }}
                   >
                     <Radio value="HL">HL</Radio>
@@ -97,12 +105,9 @@ export function CourseCard({
                 <div className="flex flex-row gap-7">
                   <Input
                     label="其它信息"
-                    value={course.info}
-                    onChange={(e) => {
-                      editCourse(
-                        { ...course, info: e.target.value },
-                        course.id,
-                      );
+                    value={editedCourse.info}
+                    onValueChange={(value) => {
+                      setEditedCourse({ ...editedCourse, info: value });
                     }}
                     maxLength={40}
                     className="max-w-[300px]"
@@ -111,7 +116,7 @@ export function CourseCard({
                     <PopoverTrigger>
                       <Button
                         className="h-[50px] w-[50px]"
-                        style={{ backgroundColor: course.color }}
+                        style={{ backgroundColor: editedCourse.color }}
                       />
                     </PopoverTrigger>
                     <PopoverContent>
@@ -119,12 +124,12 @@ export function CourseCard({
                         style={{
                           width: 150,
                         }}
-                        color={course.color}
+                        color={editedCourse.color}
                         onChange={(color) => {
-                          editCourse(
-                            { ...course, color: color.hex },
-                            course.id,
-                          );
+                          setEditedCourse({
+                            ...editedCourse,
+                            color: color.hex,
+                          });
                         }}
                       />
                     </PopoverContent>
@@ -147,6 +152,7 @@ export function CourseCard({
                   color="primary"
                   onClick={() => {
                     onClose();
+                    handleSubmit();
                   }}
                 >
                   保存
