@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { Edit, Trash2 } from "react-feather";
 import { Material } from "@uiw/react-color";
-import { Course } from "./data.ts";
+import { Course, isValidCourse } from "./data.ts";
 import { useState } from "react";
 
 type CourseCardProps = {
@@ -80,13 +80,10 @@ export function CourseCard({
                   <Input
                     className="min-w-[275px]"
                     label="课程名称"
-                    variant="flat"
+                    variant="bordered"
                     value={editedCourse.name}
-                    isInvalid={
-                      editedCourse.name.length === 0 ||
-                      editedCourse.name.length === 8
-                    }
-                    maxLength={8}
+                    isInvalid={!isValidCourse(editedCourse)}
+                    maxLength={12}
                     onValueChange={(value) => {
                       setEditedCourse({ ...editedCourse, name: value });
                     }}
@@ -106,6 +103,7 @@ export function CourseCard({
                   <Input
                     label="其它信息"
                     value={editedCourse.info}
+                    variant={"bordered"}
                     onValueChange={(value) => {
                       setEditedCourse({ ...editedCourse, info: value });
                     }}
@@ -150,6 +148,7 @@ export function CourseCard({
                 </Button>
                 <Button
                   color="primary"
+                  isDisabled={!isValidCourse(editedCourse)}
                   onClick={() => {
                     onClose();
                     handleSubmit();

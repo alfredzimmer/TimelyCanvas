@@ -26,7 +26,7 @@ export default function CourseList({
       </CardHeader>
       <div className="mb-3 flex flex-col items-center mx-0">
         {courses
-          .filter((course) => course.id !== 0) // Don't show free periods in CourseList
+          .filter((course) => course.id !== 0) // Don't show free period in CourseList
           .map((course) => (
             <CourseCard
               key={course.id}
