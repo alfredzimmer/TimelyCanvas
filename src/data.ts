@@ -6,19 +6,8 @@ export type Course = {
   color: string;
 };
 
-export const testData: Course[] = [
-  {
-    id: 0,
-    name: "文学",
-    level: "SL",
-    info: "214",
-    color: "#2862c2",
-  },
-  {
-    id: 1,
-    name: "EB",
-    level: "HL",
-    info: "307",
-    color: "#800020",
-  },
-];
+export const freePeriod: Course = {
+  id: 0,
+  name: "空课",
+  color: "#B4B4B8",
+};

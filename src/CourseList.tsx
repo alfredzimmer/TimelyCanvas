@@ -25,14 +25,16 @@ export default function CourseList({
         <h2 className="mt-4 ml-8 text-3xl">课程</h2>
       </CardHeader>
       <div className="mb-3 flex flex-col items-center mx-0">
-        {courses.map((course) => (
-          <CourseCard
-            key={course.id}
-            course={course}
-            deleteCourse={deleteCourse}
-            editCourse={editCourse}
-          />
-        ))}
+        {courses
+          .filter((course) => course.id !== 0) // Don't show free periods in CourseList
+          .map((course) => (
+            <CourseCard
+              key={course.id}
+              course={course}
+              deleteCourse={deleteCourse}
+              editCourse={editCourse}
+            />
+          ))}
         <Button className="mt-2" onPress={onOpen} color="primary">
           <Plus />
         </Button>

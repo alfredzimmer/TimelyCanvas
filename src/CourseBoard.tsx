@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Course } from "./data";
+import { Course, freePeriod } from "./data";
 import {
   Card,
   Dropdown,
@@ -9,21 +9,22 @@ import {
 } from "@nextui-org/react";
 import hexToRgba from "hex-to-rgba";
 
-interface CoursesProps {
+type CoursesProps = {
   courses: Course[];
-}
+};
 
 export function CourseEvent({ courses }: CoursesProps) {
-  const [color, setColor] = useState<string>("#B4B4B8");
-  const [bgColor, setBgColor] = useState<string>("#D7D8DC");
-  const [eventName, setEventName] = useState<string>();
+  const { color: color, name } = freePeriod;
+  const [prColor, setPrColor] = useState<string>(color);
+  const [bgColor, setBgColor] = useState<string>(hexToRgba(color, 0.25));
+  const [eventName, setEventName] = useState<string>(name);
 
   const handleSelect = (key: number) => {
     const selectedCourse = courses.find((course) => course.id === key);
     setEventName(selectedCourse!.name);
     const color = selectedCourse!.color;
     setBgColor(hexToRgba(color, 0.25));
-    setColor(color);
+    setPrColor(color);
   };
   return (
     <div className="mx-1">
@@ -33,15 +34,15 @@ export function CourseEvent({ courses }: CoursesProps) {
             as="button"
             style={{
               backgroundColor: bgColor,
-              color: color,
+              color: prColor,
               borderLeftWidth: "3px",
-              borderColor: color,
+              borderColor: prColor,
             }}
             shadow="none"
             className="min-h-[50px] w-[150px] p-2 justify-center align-middle border-zinc-500"
             radius="sm"
           >
-            <p className="font-bold">{eventName ? eventName : ""}</p>
+            <p className="font-bold">{eventName === "空课" ? "" : eventName}</p>
           </Card>
         </DropdownTrigger>
         <DropdownMenu onAction={(key) => handleSelect(Number(key))}>
@@ -49,9 +50,9 @@ export function CourseEvent({ courses }: CoursesProps) {
             <DropdownItem key={course.id}>
               <div className="flex flex-row">
                 <div
-                  className="mr-2 h-5 w-5 rounded-full"
+                  className="mr-3 h-5 w-5 rounded-full"
                   style={{ backgroundColor: course.color }}
-                ></div>
+                />
                 <p>{course.name}</p>
               </div>
             </DropdownItem>

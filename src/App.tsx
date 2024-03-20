@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Course } from "./data";
+import { Course, freePeriod } from "./data";
 import CourseList from "./CourseList";
 import CourseBoard from "./CourseBoard";
 import { Header } from "./Header";
 
 function App() {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[]>([freePeriod]);
 
   const addCourse = (newCourse: Course) => {
     const coursesUpdated = [...courses, newCourse];
