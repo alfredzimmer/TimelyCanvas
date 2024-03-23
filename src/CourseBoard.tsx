@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Course, freePeriod } from "./data";
 import {
   Card,
@@ -9,16 +9,21 @@ import {
 } from "@nextui-org/react";
 import hexToRgba from "hex-to-rgba";
 
-type CoursesProps = {
+type CourseEventProps = {
   courses: Course[];
+  day: number;
+  period: number;
+  selectedCourse: Course;
+  handleSelect: (day: number, period: number, key: number) => void;
 };
 
-function CourseEvent({ courses }: CoursesProps) {
-  const [selectedCourse, setSelectedCourse] = useState(freePeriod);
-  function handleSelect(key: number) {
-    setSelectedCourse(courses.find((course) => course.id === key)!);
-  }
-
+function CourseEvent({
+  day,
+  period,
+  courses,
+  selectedCourse,
+  handleSelect,
+}: CourseEventProps) {
   return (
     <div className="mx-1">
       <Dropdown>
@@ -40,7 +45,9 @@ function CourseEvent({ courses }: CoursesProps) {
             </p>
           </Card>
         </DropdownTrigger>
-        <DropdownMenu onAction={(key) => handleSelect(Number(key))}>
+        <DropdownMenu
+          onAction={(key) => handleSelect(day, period, Number(key))}
+        >
           {courses.map((course) => (
             <DropdownItem key={course.id}>
               <div className="flex flex-row">
@@ -58,13 +65,49 @@ function CourseEvent({ courses }: CoursesProps) {
   );
 }
 
-export default function CourseBoard({ courses }: CoursesProps) {
+export default function CourseBoard({ courses }: { courses: Course[] }) {
+  const [selectedCourses, setSelectedCourses] = useState<Course[][]>(
+    Array.from({ length: 5 }, () => Array(10).fill(freePeriod)),
+  );
+
+  function handleSelect(day: number, period: number, key: number) {
+    const targetCourse = courses.find((course) => course.id === key)!;
+
+    // If I continue to write code like this I'll murder myself someday.
+    setSelectedCourses((prevCourses) => {
+      const newSelectedCourses = [...prevCourses];
+      newSelectedCourses[day] = [...newSelectedCourses[day]];
+      newSelectedCourses[day][period] = targetCourse;
+      localStorage.setItem(
+        "selectedCourses",
+        JSON.stringify(newSelectedCourses),
+      );
+      return newSelectedCourses;
+    });
+  }
+
+  useEffect(() => {
+    const userSelectedCourses = localStorage.getItem("selectedCourses");
+    if (userSelectedCourses) {
+      setSelectedCourses(JSON.parse(userSelectedCourses));
+    }
+  }, []);
+
   return (
-    <div className="flex flex-col mr-20">
-      {[...Array(10)].map((_, i) => (
-        <div className="justify-around flex flex-row mt-2" key={i}>
-          {[...Array(5)].map((_, j) => (
-            <CourseEvent key={j} courses={courses} />
+    <div className="flex flex-row mr-20">
+      {[...Array(5)].map((_, i) => (
+        <div className="justify-around flex flex-col ml-2" key={i}>
+          {[...Array(10)].map((_, j) => (
+            <div className={"mt-2"} key={i * 10 + j}>
+              <CourseEvent
+                key={j}
+                day={i}
+                period={j}
+                selectedCourse={selectedCourses[i][j]}
+                courses={courses}
+                handleSelect={handleSelect}
+              />
+            </div>
           ))}
         </div>
       ))}

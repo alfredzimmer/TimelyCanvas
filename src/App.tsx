@@ -5,6 +5,7 @@ import CourseBoard from "./CourseBoard";
 import { Header } from "./Header";
 
 function App() {
+  // TODO: Rewrite using useContext.
   const [courses, setCourses] = useState<Course[]>([freePeriod]);
 
   const addCourse = (newCourse: Course) => {
