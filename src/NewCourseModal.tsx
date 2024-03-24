@@ -13,8 +13,8 @@ import {
   RadioGroup,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { generateId, generateRandomColor } from "./utils.ts";
-import { Course, isValidCourse } from "./data.ts";
+import { generateId, generateRandomColor, isValidCourse } from "./utils.ts";
+import { Course } from "./data.ts";
 import { Material } from "@uiw/react-color";
 
 type CourseDetailsProps = {
@@ -120,7 +120,7 @@ export default function NewCourseModal({
                     handleSubmit();
                   }}
                 >
-                  提交
+                  确认
                 </Button>
               </ModalFooter>
             </>

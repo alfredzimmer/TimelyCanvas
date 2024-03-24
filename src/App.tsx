@@ -5,7 +5,7 @@ import CourseBoard from "./CourseBoard";
 import { Header } from "./Header";
 import { Card } from "@nextui-org/react";
 
-function App() {
+export default function App() {
   // TODO: Refactor using useReducer.
   const [courses, setCourses] = useState<Course[]>([freePeriod]);
 
@@ -46,7 +46,7 @@ function App() {
   return (
     <>
       <Header />
-      <Card className="justify-center flex-row flex mx-32 min-w-[800px] align-middle mt-[80px] p-10">
+      <Card className="justify-center flex-row flex mx-32 min-w-[800px] align-middle my-[80px] p-10">
         <CourseBoard courses={courses} />
         <div className="min-w-[400px]">
           <CourseList
@@ -60,5 +60,3 @@ function App() {
     </>
   );
 }
-
-export default App;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Course, freePeriod } from "./data";
+import { Course, initialCourses } from "./data";
 import {
+  Button,
   Card,
   Dropdown,
   DropdownItem,
@@ -8,6 +9,7 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import hexToRgba from "hex-to-rgba";
+import { handleDownload } from "./utils.ts";
 
 type CourseEventProps = {
   courses: Course[];
@@ -25,7 +27,7 @@ function CourseEvent({
   handleSelect,
 }: CourseEventProps) {
   return (
-    <div className="mx-1">
+    <div className="mx-1 mt-2">
       <Dropdown>
         <DropdownTrigger>
           <Card
@@ -66,11 +68,15 @@ function CourseEvent({
 }
 
 export default function CourseBoard({ courses }: { courses: Course[] }) {
-  const [selectedCourses, setSelectedCourses] = useState<Course[][]>(
-    Array.from({ length: 5 }, () => Array(10).fill(freePeriod)),
-  );
+  const [selectedCourses, setSelectedCourses] =
+    useState<Course[][]>(initialCourses);
 
-  function handleSelect(day: number, period: number, key: number) {
+  const handleReset = () => {
+    localStorage.setItem("selectedCourses", JSON.stringify(initialCourses));
+    setSelectedCourses(initialCourses);
+  };
+
+  const handleSelect = (day: number, period: number, key: number) => {
     const targetCourse = courses.find((course) => course.id === key)!;
 
     // If I continue to write code like this I'll murder myself someday.
@@ -84,7 +90,7 @@ export default function CourseBoard({ courses }: { courses: Course[] }) {
       );
       return newSelectedCourses;
     });
-  }
+  };
 
   useEffect(() => {
     const userSelectedCourses = localStorage.getItem("selectedCourses");
@@ -94,11 +100,11 @@ export default function CourseBoard({ courses }: { courses: Course[] }) {
   }, []);
 
   return (
-    <div className="flex flex-row mr-20 h-[600px]">
-      {[...Array(5)].map((_, i) => (
-        <div className="justify-around flex flex-col ml-2" key={i}>
-          {[...Array(10)].map((_, j) => (
-            <div className={"mt-2"} key={i * 10 + j}>
+    <div className={"flex flex-col"}>
+      <div className="flex flex-row mr-20 h-[600px]">
+        {[...Array(5)].map((_, i) => (
+          <div className="justify-around flex flex-col ml-2" key={i}>
+            {[...Array(10)].map((_, j) => (
               <CourseEvent
                 key={j}
                 day={i}
@@ -107,10 +113,36 @@ export default function CourseBoard({ courses }: { courses: Course[] }) {
                 courses={courses}
                 handleSelect={handleSelect}
               />
-            </div>
-          ))}
-        </div>
-      ))}
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className={"mx-auto mt-5"}>
+        <Button
+          size={"lg"}
+          color={"danger"}
+          onPress={handleReset}
+          className={"mr-12"}
+        >
+          重置
+        </Button>
+        <Button
+          size={"lg"}
+          color={"secondary"}
+          onPress={() => {
+            handleDownload({
+              title: "Dinner",
+              description: "Nightly thing I do",
+              busyStatus: "FREE",
+              start: [2024, 3, 24, 6, 30],
+              duration: { minutes: 50 },
+              calName: "布拉布拉",
+            });
+          }}
+        >
+          导出
+        </Button>
+      </div>
     </div>
   );
 }

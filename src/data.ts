@@ -12,11 +12,6 @@ export const freePeriod: Course = {
   color: "#B4B4B8",
 };
 
-export const isValidCourse = (course: Course) => {
-  /**
-   * @param course
-   *
-   * Return true if the course is valid.
-   */
-  return course.name.length <= 8 && course.name.length > 0;
-};
+export const initialCourses: Course[][] = Array.from({ length: 5 }, () =>
+  Array(10).fill(freePeriod),
+);

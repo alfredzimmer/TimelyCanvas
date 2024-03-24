@@ -18,8 +18,9 @@ import {
 } from "@nextui-org/react";
 import { Edit, Trash2 } from "react-feather";
 import { Material } from "@uiw/react-color";
-import { Course, isValidCourse } from "./data.ts";
+import { Course } from "./data.ts";
 import { useState } from "react";
+import { isValidCourse } from "./utils.ts";
 
 type CourseCardProps = {
   course: Course;
