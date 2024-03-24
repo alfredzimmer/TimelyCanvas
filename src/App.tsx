@@ -3,9 +3,10 @@ import { Course, freePeriod } from "./data";
 import CourseList from "./CourseList";
 import CourseBoard from "./CourseBoard";
 import { Header } from "./Header";
+import { Card } from "@nextui-org/react";
 
 function App() {
-  // TODO: Rewrite using useContext.
+  // TODO: Refactor using useReducer.
   const [courses, setCourses] = useState<Course[]>([freePeriod]);
 
   const addCourse = (newCourse: Course) => {
@@ -45,7 +46,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className="justify-center flex-row flex mx-5 min-w-[800px] align-middle mt-[80px]">
+      <Card className="justify-center flex-row flex mx-32 min-w-[800px] align-middle mt-[80px] p-10">
         <CourseBoard courses={courses} />
         <div className="min-w-[400px]">
           <CourseList
@@ -55,7 +56,7 @@ function App() {
             editCourse={editCourse}
           />
         </div>
-      </main>
+      </Card>
     </>
   );
 }

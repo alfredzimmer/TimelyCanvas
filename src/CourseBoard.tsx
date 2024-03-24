@@ -94,7 +94,7 @@ export default function CourseBoard({ courses }: { courses: Course[] }) {
   }, []);
 
   return (
-    <div className="flex flex-row mr-20">
+    <div className="flex flex-row mr-20 h-[600px]">
       {[...Array(5)].map((_, i) => (
         <div className="justify-around flex flex-col ml-2" key={i}>
           {[...Array(10)].map((_, j) => (
