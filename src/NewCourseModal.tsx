@@ -32,6 +32,7 @@ export default function NewCourseModal({
     id: generateId(),
     name: "",
     color: generateRandomColor(),
+    info: "",
   });
 
   function handleSubmit() {
@@ -68,6 +69,10 @@ export default function NewCourseModal({
                   <RadioGroup
                     onValueChange={(value) => {
                       course.level = value;
+                      setCourse((prevCourse) => ({
+                        ...prevCourse,
+                        level: value,
+                      }));
                     }}
                   >
                     <Radio value="HL">HL</Radio>
@@ -79,7 +84,10 @@ export default function NewCourseModal({
                     label="其它信息"
                     variant={"bordered"}
                     onChange={(e) => {
-                      course.info = e.target.value;
+                      setCourse((prevCourse) => ({
+                        ...prevCourse,
+                        info: e.target.value,
+                      }));
                     }}
                     maxLength={40}
                     className="max-w-[300px]"
